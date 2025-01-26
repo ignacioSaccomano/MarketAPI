@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  app:
+  proyecto_market:
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,5 +27,5 @@ services:
       - db-data:/var/lib/postgresql/data
 
 volumes:
-  db-data:
+  db-data: # external: true 
 

@@ -1,31 +1,28 @@
 version: '3.9'
 services:
-  proyecto_market:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  java_app:
+    container_name: java_app
+    build: .
     ports:
-      - "8080:8080" # Mapea el puerto del contenedor al host
-    depends_on:
-      - db
+      - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydatabase
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: password
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      - DATABASE_URL=jdbc:postgresql://java_db:5432/postgres
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+    depends_on:
+      - java_db
 
-  db:
-    image: postgres:15
-    container_name: postgres-db
+  java_db:
+    container_name: java_db
+    image: postgres:latest
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     volumes:
-      - db-data:/var/lib/postgresql/data
-
+      - db_market:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
 volumes:
-  db-data: # external: true 
-
+  db_market:

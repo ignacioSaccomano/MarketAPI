@@ -2,7 +2,6 @@ package com.ignaciosaccomano.proyecto_market.web.controller;
 
 import com.ignaciosaccomano.proyecto_market.domain.Product;
 import com.ignaciosaccomano.proyecto_market.domain.service.ProductService;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete (@PathVariable("id") int productId) {
-        return new ResponseEntity(productService.delete(productId)? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> delete (@PathVariable("id") int productId) {
+        return new ResponseEntity<>(productService.delete(productId)? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
